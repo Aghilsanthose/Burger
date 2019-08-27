@@ -1,6 +1,6 @@
-import React from 'react';
-import Layout from './Components/Layout/Layout';
-import Burger from './Containers/BurgerBuilder/BurgerBuilder'
+import React from "react";
+import Layout from "./Containers/Layout/Layout";
+import Burger from "./Containers/BurgerBuilder/BurgerBuilder";
 
 function App() {
   return (
@@ -9,7 +9,6 @@ function App() {
         <Burger />
       </Layout>
     </React.Fragment>
-
   );
 }
 
