@@ -6,7 +6,7 @@ class Modal extends Component {
   state = {};
 
   componentWillUpdate(nextProps, nextState) {
-    console.log("[Inside Modal] willUpdate");
+    //console.log("[Inside Modal] willUpdate");
   }
 
   //   shouldComponentUpdate(nextProps, nextState) {
@@ -14,7 +14,7 @@ class Modal extends Component {
   //   }
 
   render() {
-    console.log("Inside Modal", this.props.show);
+    //console.log("Inside Modal", this.props);
     return (
       <React.Fragment>
         <BackDrop show={this.props.show} clicked={this.props.cancelPurchase} />

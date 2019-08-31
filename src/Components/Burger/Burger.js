@@ -1,30 +1,36 @@
-import React from 'react';
-import classes from './Burger.module.css'
-import BurgerIngridents from './BurgerIngridents/BurgerIngridents'
+import React from "react";
+import classes from "./Burger.module.css";
+import BurgerIngridents from "./BurgerIngridents/BurgerIngridents";
 
-const Burger = (props) => {
-    let transformedIngrident = Object.keys(props.Ingridents).map(igKey => {
-        return (
-            [...Array(props.Ingridents[igKey])].map((_, i) => {
-                return (<BurgerIngridents key={igKey + i} type={igKey} />)
-            })
-        )
-    }).reduce((arr, el) => {
-        return arr.concat(el)
-    }, [])
+const Burger = props => {
+  let transformedIngrident = props.Ingridents
+    ? Object.keys(props.Ingridents)
+        .map(igKey => {
+          return [...Array(props.Ingridents[igKey])].map((_, i) => {
+            return <BurgerIngridents key={igKey + i} type={igKey} />;
+          });
+        })
+        .reduce((arr, el) => {
+          return arr.concat(el);
+        }, [])
+    : [];
 
-    // console.log("In Burger", transformedIngrident)
+  //console.log("In Burger", transformedIngrident);
 
-    if (transformedIngrident.length === 0) {
-        // console.log("In IF statement")
-        transformedIngrident = <p>Please add ingridents</p>
-    }
+  //console.log("In Burger", transformedIngrident.length);
 
-    return (<div className={classes.Burger}>
-        <BurgerIngridents type="bread-top" />
-        {transformedIngrident}
-        <BurgerIngridents type="bread-bottom" />
-    </div>)
-}
+  if (transformedIngrident.length === 0) {
+    // console.log("In IF statement")
+    transformedIngrident = <p>Please add ingridents</p>;
+  }
 
-export default Burger
+  return (
+    <div className={classes.Burger}>
+      <BurgerIngridents type="bread-top" />
+      {transformedIngrident}
+      <BurgerIngridents type="bread-bottom" />
+    </div>
+  );
+};
+
+export default Burger;
