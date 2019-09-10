@@ -23,7 +23,6 @@ const Burger = props => {
     // console.log("In IF statement")
     transformedIngrident = <p>Please add ingridents</p>;
   }
-
   return (
     <div className={classes.Burger}>
       <BurgerIngridents type="bread-top" />

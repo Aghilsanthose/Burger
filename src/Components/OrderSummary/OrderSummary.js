@@ -6,7 +6,7 @@ class OrderSummary extends Component {
 
   //WARNING! To be deprecated in React v17. Use componentDidUpdate instead.
   componentWillUpdate() {
-    console.log("[In OrderSummary] willUpdate ");
+    // console.log("[In OrderSummary] willUpdate ");
   }
 
   //   shouldComponentUpdate(nextProps, nextState) {
@@ -14,7 +14,7 @@ class OrderSummary extends Component {
   //   }
 
   render() {
-    console.log("In OrderSummary render");
+    // console.log("In OrderSummary render");
     const orderSummary = Object.keys(this.props.ingridents).map(keys => {
       return (
         <li key={keys}>

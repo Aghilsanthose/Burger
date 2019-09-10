@@ -8,6 +8,7 @@ import Spinner from "../../Components/UI/Spinner/Spinner";
 import withError from "../../hoc/WithError/withError";
 import axios from "../../axios-orders";
 import spinner from "../../Components/UI/Spinner/Spinner";
+import { CLIENT_RENEG_LIMIT } from "tls";
 
 const INGRIDENT_PRICES = {
   salad: 0.5,
@@ -27,7 +28,7 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount() {
-    console.log("Did MOnt");
+    //console.log("Did MOnt");
     axios
       .get("https://reactapp-e2c26.firebaseio.com/ingredients.json")
       .then(request => {
@@ -42,10 +43,10 @@ class BurgerBuilder extends Component {
 
   //WARNING! To be deprecated in React v17. Use componentDidUpdate instead.
   componentWillUpdate(nextProps, nextState) {
-    console.log("Does update");
+    // console.log("Does update");
   }
   componentDidUpdate(prevProps, prevState) {
-    console.log("Did update", this.state.error);
+    //console.log("Did update", this.state.error);
   }
 
   updatePurchasable(ingridentObj) {
@@ -112,24 +113,22 @@ class BurgerBuilder extends Component {
     this.setState({ Purchasing: false });
   };
   purchaseContinueHandler = () => {
-    this.setState({ Loading: true });
-    const data = {
-      ingridents: this.state.Ingridents,
-      totalPrice: this.state.Price,
-      customerName: {
-        Name: "Aghil",
-        Address: "XXX"
-      },
-      deliveryMethod: "Fastest"
-    };
-    //console.log("In Continue Handler");
-    instance
-      .post("/sample.json", data)
-      .then(response => this.setState({ Loading: false, Purchasing: true }))
-      .catch(error => this.setState({ Loading: false, Purchasing: true }));
+    const query = [];
+    for (let i in this.state.Ingridents) {
+      query.push(
+        encodeURIComponent(i) +
+          "=" +
+          encodeURIComponent(this.state.Ingridents[i])
+      );
+    }
+    query.push("Price=" + this.state.Price);
+    this.props.history.push({
+      pathname: "/checkout",
+      search: "?" + query.join("&")
+    });
   };
   render() {
-    console.log("Inside Burger Builder");
+    //console.log("Inside Burger Builder");
 
     const disabledInfor = {
       ...this.state.Ingridents
@@ -190,4 +189,4 @@ class BurgerBuilder extends Component {
   }
 }
 
-export default withError(BurgerBuilder, axios);
+export default withError(BurgerBuilder, instance);

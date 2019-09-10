@@ -34,16 +34,16 @@ const withError = (WrappedComponent, axios) => {
     }
 
     componentWillUnmount() {
-      axios.interceptor.request.eject(this.reqInterceptors);
-      axios.interceptor.response.eject(this.resInterceptors);
+      axios.interceptors.request.eject(this.reqInterceptors);
+      axios.interceptors.response.eject(this.resInterceptors);
     }
 
     errorHandler = () => {
-      console.log("In Error Handler", this.state.error);
+      //console.log("In Error Handler", this.state.error);
       this.setState({ error: null });
     };
     render() {
-      console.log("within Wrapped initially", this.state.error);
+      //console.log("within Wrapped initially", this.state.error);
       return (
         <React.Fragment>
           <Modal cancelPurchase={this.errorHandler} show={this.state.error}>
