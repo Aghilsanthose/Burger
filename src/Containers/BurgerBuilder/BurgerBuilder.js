@@ -3,12 +3,10 @@ import Burger from "../../Components/Burger/Burger";
 import BuildControls from "../../Components/BuildControls/BuildControls";
 import Modal from "../../Components/UI/Modal/Modal";
 import OrderSummary from "../../Components/OrderSummary/OrderSummary";
-import instance from "../../axios-orders";
 import Spinner from "../../Components/UI/Spinner/Spinner";
 import withError from "../../hoc/WithError/withError";
 import axios from "../../axios-orders";
 import spinner from "../../Components/UI/Spinner/Spinner";
-import { CLIENT_RENEG_LIMIT } from "tls";
 
 const INGRIDENT_PRICES = {
   salad: 0.5,
@@ -189,4 +187,4 @@ class BurgerBuilder extends Component {
   }
 }
 
-export default withError(BurgerBuilder, instance);
+export default withError(BurgerBuilder, axios);

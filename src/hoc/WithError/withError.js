@@ -9,7 +9,7 @@ const withError = (WrappedComponent, axios) => {
     };
 
     componentWillMount() {
-      //console.log("Will Mount");
+      // console.log("Will Mount", axios);
       this.reqInterceptors = axios.interceptors.request.use(
         req => {
           //console.log("[Req] Will Mount", req);
