@@ -5,10 +5,10 @@ import instance from "../../../axios-orders";
 import Spinner from "../../../Components/UI/Spinner/Spinner";
 import { withRouter } from "react-router-dom";
 import Input from "../../../Components/UI/Input/Input";
+import { connect } from "react-redux";
 
 class ContactData extends Component {
   state = {
-    Ingridents: null,
     orderForm: {
       name: {
         elementType: "input",
@@ -93,9 +93,6 @@ class ContactData extends Component {
   //WARNING! To be deprecated in React v17. Use componentDidMount instead.
   //WARNING! To be deprecated in React v17. Use componentDidMount instead.
 
-  componentWillMount() {
-    this.setState({ Ingridents: this.props.Ingridents });
-  }
   validationHandler = (value, rules) => {
     let isValid = false;
     if (Object.keys(rules).length === 0) {
@@ -134,7 +131,7 @@ class ContactData extends Component {
 
     this.setState({ Loading: true });
     const data = {
-      ingridents: this.state.Ingridents,
+      ingridents: this.props.Ingridents,
       totalPrice: this.props.Price,
       customerDetails: formobj
     };
@@ -196,4 +193,12 @@ class ContactData extends Component {
   }
 }
 
-export default withRouter(ContactData);
+const mapStateToProps = state => {
+  return {
+    Ingridents: state.Ingridents,
+    Price: state.TotalPrice,
+    purchasable: state.purchasable
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(ContactData));
