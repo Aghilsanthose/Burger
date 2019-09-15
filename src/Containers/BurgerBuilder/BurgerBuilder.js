@@ -10,6 +10,8 @@ import spinner from "../../Components/UI/Spinner/Spinner";
 import { connect } from "react-redux";
 import * as actionTypes from "../../store/actions";
 
+//commenting to for testing
+
 class BurgerBuilder extends Component {
   state = {
     Purchasing: false,
