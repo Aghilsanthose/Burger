@@ -9,25 +9,25 @@ const withError = (WrappedComponent, axios) => {
     };
 
     componentWillMount() {
-      // console.log("Will Mount", axios);
+      //console.log("Will Mount", axios);
       this.reqInterceptors = axios.interceptors.request.use(
         req => {
-          //console.log("[Req] Will Mount", req);
+          console.log("[Req] Will Mount", req);
           this.setState({ error: null });
           return req;
         },
         err => {
-          //console.log("[Req] Err", err);
+          console.log("[Req] Err", err);
         }
       );
       this.resInterceptors = axios.interceptors.response.use(
         res => {
           //this.setState({ error: null });
-          //console.log("[Res]", res);
+          console.log("[Res]", res);
           return res;
         },
         error => {
-          //console.log("[Res] Err", error);
+          console.log("[Res] Err", error);
           this.setState({ error: error });
         }
       );

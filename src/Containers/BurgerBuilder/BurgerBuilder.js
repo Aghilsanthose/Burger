@@ -8,26 +8,20 @@ import withError from "../../hoc/WithError/withError";
 import axios from "../../axios-orders";
 import spinner from "../../Components/UI/Spinner/Spinner";
 import { connect } from "react-redux";
-import * as actionTypes from "../../store/actions";
+import {
+  addIngridents,
+  removeIngridents,
+  retrivingIngridentsFromServer
+} from "../../store/index";
 
 class BurgerBuilder extends Component {
   state = {
     Purchasing: false,
-    Loading: false,
-    error: false
+    Loading: false
   };
 
   componentDidMount() {
-    axios
-      .get("https://reactapp-e2c26.firebaseio.com/ingredients.json")
-      .then(request => {
-        //console.log("Data from DB", request.data);
-        this.props.onAdd(request.data);
-      })
-      .catch(error => {
-        console.log("Inside catch", error);
-        this.setState({ error: true });
-      });
+    this.props.onRetrivingServer();
   }
 
   handlingOrderSummary = () => {
@@ -39,7 +33,7 @@ class BurgerBuilder extends Component {
   };
 
   render() {
-    //console.log("Inside Burger Builder", this.props);
+    console.log("Inside Burger Builder", this.props);
 
     const disabledInfor = {
       ...this.props.Ingridents
@@ -49,7 +43,7 @@ class BurgerBuilder extends Component {
       disabledInfor[item] = disabledInfor[item] < 1;
     }
 
-    let burger = this.state.error ? (
+    let burger = this.props.error ? (
       <p>Unable to load Ingredient</p>
     ) : (
       <Spinner />
@@ -86,10 +80,8 @@ class BurgerBuilder extends Component {
           <Burger Ingridents={this.props.Ingridents} />
           <BuildControls
             price={this.props.Price}
-            addition={type => {
-              this.props.onAdd(type);
-            }}
-            removal={type => this.props.onSubtract(type)}
+            addition={this.props.onAdd}
+            removal={this.props.onSubtract}
             disabled={disabledInfor}
             Purchasable={!this.props.purchasable}
             OrderSummary={this.handlingOrderSummary}
@@ -106,17 +98,18 @@ const mapStateToProps = state => {
   return {
     Ingridents: state.Ingridents,
     Price: state.TotalPrice,
-    purchasable: state.purchasable
+    purchasable: state.purchasable,
+    error: state.error
   };
 };
 
 const mapdispatchToProps = dispatch => {
   return {
     onAdd: data => {
-      dispatch({ type: actionTypes.ADDINGINGRIDENTS, data: data });
+      dispatch(addIngridents(data));
     },
-    onSubtract: data =>
-      dispatch({ type: actionTypes.REMOVINGINGRIDENTS, data: data })
+    onSubtract: data => dispatch(removeIngridents(data)),
+    onRetrivingServer: () => dispatch(retrivingIngridentsFromServer())
   };
 };
 
