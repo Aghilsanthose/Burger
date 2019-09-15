@@ -8,7 +8,7 @@ import withError from "../../hoc/WithError/withError";
 import axios from "../../axios-orders";
 import spinner from "../../Components/UI/Spinner/Spinner";
 import { connect } from "react-redux";
-import * as actionTypes from "../../store/actions";
+import { addIngridents, removeIngridents } from "../../store/actions/index";
 
 //commenting to for testing
 
@@ -115,10 +115,9 @@ const mapStateToProps = state => {
 const mapdispatchToProps = dispatch => {
   return {
     onAdd: data => {
-      dispatch({ type: actionTypes.ADDINGINGRIDENTS, data: data });
+      dispatch(addIngridents(data));
     },
-    onSubtract: data =>
-      dispatch({ type: actionTypes.REMOVINGINGRIDENTS, data: data })
+    onSubtract: data => dispatch(removeIngridents(data))
   };
 };
 
