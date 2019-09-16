@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import Button from "../../../Components/UI/Button/Button";
 import classes from "./contactData.module.css";
-import instance from "../../../axios-orders";
 import Spinner from "../../../Components/UI/Spinner/Spinner";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import Input from "../../../Components/UI/Input/Input";
 import { connect } from "react-redux";
+import {
+  storingDataOnServer,
+  startPurchasing
+} from "../../../store/actions/index";
 
 class ContactData extends Component {
   state = {
@@ -87,7 +90,6 @@ class ContactData extends Component {
         validation: {}
       }
     },
-    Loading: false,
     touched: false
   };
   //WARNING! To be deprecated in React v17. Use componentDidMount instead.
@@ -118,7 +120,7 @@ class ContactData extends Component {
     );
     elementInTemp.touched = true;
     temp[id] = elementInTemp;
-    console.log(temp);
+    //console.log(temp);
     this.setState({ orderForm: temp });
   };
 
@@ -129,19 +131,12 @@ class ContactData extends Component {
       formobj[key] = this.state.orderForm[key].value;
     }
 
-    this.setState({ Loading: true });
     const data = {
       ingridents: this.props.Ingridents,
       totalPrice: this.props.Price,
       customerDetails: formobj
     };
-    instance
-      .post("/sample.json", data)
-      .then(response => {
-        this.setState({ Loading: false });
-        this.props.history.push("/");
-      })
-      .catch(error => this.setState({ Loading: false }));
+    this.props.onStoringDataToServer(data);
   };
 
   render() {
@@ -157,7 +152,7 @@ class ContactData extends Component {
       formElements.filter(element => element.element.valid === false).length ===
       0;
 
-    const spinnerOrForm = !this.state.Loading ? (
+    const spinnerOrForm = !this.props.Loading ? (
       <div className={classes.ContactData}>
         <h4>Enter your data</h4>
         <form onSubmit={this.orderHandler}>
@@ -176,11 +171,7 @@ class ContactData extends Component {
               />
             );
           })}
-          <Button
-            btnType="Success"
-            clicked={this.orderHandler}
-            disabled={!disablingButton}
-          >
+          <Button btnType="Success" disabled={!disablingButton}>
             Order
           </Button>
         </form>
@@ -189,16 +180,32 @@ class ContactData extends Component {
       <Spinner />
     );
 
-    return <React.Fragment>{spinnerOrForm}</React.Fragment>;
+    return (
+      <React.Fragment>
+        {this.props.redirect ? <Redirect to="/" /> : spinnerOrForm}
+      </React.Fragment>
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    Ingridents: state.Ingridents,
-    Price: state.TotalPrice,
-    purchasable: state.purchasable
+    Ingridents: state.burgerBuilder.Ingridents,
+    Price: state.burgerBuilder.TotalPrice,
+    purchasable: state.burgerBuilder.purchasable,
+    redirect: state.order.redirect,
+    Loading: state.order.loading
   };
 };
 
-export default connect(mapStateToProps)(withRouter(ContactData));
+const mapDisptachToProps = dispatch => {
+  return {
+    onStoringDataToServer: data => dispatch(storingDataOnServer(data)),
+    loading: () => dispatch(startPurchasing())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDisptachToProps
+)(withRouter(ContactData));

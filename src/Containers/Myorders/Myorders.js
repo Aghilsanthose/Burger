@@ -3,6 +3,7 @@ import Order from "../../Components/Order/order";
 import axios from "../../axios-orders";
 import Spinner from "../../Components/UI/Spinner/Spinner";
 import withError from "../../hoc/WithError/withError";
+import { connect } from "react-redux";
 
 class Myorder extends Component {
   state = {
@@ -17,7 +18,6 @@ class Myorder extends Component {
         for (let i in response.data) {
           orders.push(response.data[i]);
         }
-        //console.log("In array", orders);
         this.setState({ orders: orders, loading: false });
       })
       .catch(err => this.setState({ loading: false }));
@@ -35,4 +35,7 @@ class Myorder extends Component {
   }
 }
 
-export default withError(Myorder, axios);
+const mapStateToProps = state => {};
+const mapDisptachToProps = disptach => {};
+
+export default connect()(withError(Myorder, axios));

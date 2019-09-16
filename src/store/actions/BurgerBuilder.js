@@ -1,5 +1,5 @@
-import * as actionTypes from "./actions";
-import axios from "axios";
+import * as actionTypes from "./actionsTypes";
+import axios from "../../axios-orders";
 
 export const addIngridents = data => {
   return { type: actionTypes.ADDINGINGRIDENTS, data: data };
@@ -13,7 +13,7 @@ export const retrivingIngridentsFromServer = () => {
   //console.log("Launching retriving server");
   return dispatch => {
     axios
-      .get("https://reactapp-e2c26.firebaseio.com/ingredients.json1")
+      .get("https://reactapp-e2c26.firebaseio.com/ingredients.json")
       .then(request => {
         //console.log("Data from DB", request.data);
         dispatch({ type: actionTypes.STORINGINGRIDNETS, data: request.data });

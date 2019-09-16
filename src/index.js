@@ -7,12 +7,18 @@ import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import { applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-import ReducerIngridient from "./store/reducerIngredient";
+import reducerIngrident from "./store/reducers/reducerIngredient";
+import reducerOrder from "./store/reducers/reducerOrder";
+
+const rootReducers = combineReducers({
+  burgerBuilder: reducerIngrident,
+  order: reducerOrder
+});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
-  ReducerIngridient,
+  rootReducers,
   composeEnhancers(applyMiddleware(thunk))
 );
 

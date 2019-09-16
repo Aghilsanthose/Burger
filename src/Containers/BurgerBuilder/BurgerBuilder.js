@@ -12,7 +12,7 @@ import {
   addIngridents,
   removeIngridents,
   retrivingIngridentsFromServer
-} from "../../store/index";
+} from "../../store/actions/index";
 
 class BurgerBuilder extends Component {
   state = {
@@ -21,6 +21,7 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount() {
+    //console.log("In DidMount");
     this.props.onRetrivingServer();
   }
 
@@ -33,7 +34,7 @@ class BurgerBuilder extends Component {
   };
 
   render() {
-    console.log("Inside Burger Builder", this.props);
+    //console.log("Inside Burger Builder", this.props);
 
     const disabledInfor = {
       ...this.props.Ingridents
@@ -96,10 +97,10 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
   return {
-    Ingridents: state.Ingridents,
-    Price: state.TotalPrice,
-    purchasable: state.purchasable,
-    error: state.error
+    Ingridents: state.burgerBuilder.Ingridents,
+    Price: state.burgerBuilder.TotalPrice,
+    purchasable: state.burgerBuilder.purchasable,
+    error: state.burgerBuilder.error
   };
 };
 

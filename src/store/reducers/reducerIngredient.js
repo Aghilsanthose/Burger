@@ -1,5 +1,4 @@
-import * as actionTypes from "./actions";
-import { addIngridents } from "./actionCreators";
+import * as actionTypes from "../actions/actionsTypes";
 
 const initialState = {
   Ingridents: null,
@@ -52,7 +51,10 @@ const removeIngridentFromBurger = (state, action) => {
 const storingIngridentToState = (state, action) => {
   return {
     ...state,
-    Ingridents: action.data
+    Ingridents: action.data,
+    TotalPrice: 4,
+    error: false,
+    purchasable: false
   };
 };
 
@@ -64,6 +66,7 @@ const storingError = (state, action) => {
 };
 
 const reducerIngrident = (state = initialState, action) => {
+  //console.log("Inside reducer", action);
   if (action.type === actionTypes.ADDINGINGRIDENTS) {
     return addIngridentsToBurger(state, action);
   }

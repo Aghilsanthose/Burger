@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import CheckoutSummary from "../../Components/Order/CheckoutSummary/CheckoutSummary";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import ContactData from "./contactData/contactData";
 import { connect } from "react-redux";
 
@@ -14,7 +14,7 @@ class Checkout extends Component {
   };
 
   render() {
-    return (
+    const checkoutSummary = (
       <React.Fragment>
         <CheckoutSummary
           checkoutcontinue={this.checkoutcontinueHandler}
@@ -27,14 +27,17 @@ class Checkout extends Component {
         />
       </React.Fragment>
     );
+    const temp = this.props.Ingridents ? checkoutSummary : <Redirect to="/" />;
+
+    return temp;
   }
 }
 
 const mapStateToProps = state => {
   return {
-    Ingridents: state.Ingridents,
-    Price: state.TotalPrice,
-    purchasable: state.purchasable
+    Ingridents: state.burgerBuilder.Ingridents,
+    Price: state.burgerBuilder.TotalPrice,
+    purchasable: state.burgerBuilder.purchasable
   };
 };
 
