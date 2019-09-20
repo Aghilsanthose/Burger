@@ -9,6 +9,8 @@ import {
   storingDataOnServer,
   startPurchasing
 } from "../../../store/actions/index";
+import axios from "../../../axios-orders";
+import withError from "../../../hoc/WithError/withError";
 
 class ContactData extends Component {
   state = {
@@ -134,9 +136,10 @@ class ContactData extends Component {
     const data = {
       ingridents: this.props.Ingridents,
       totalPrice: this.props.Price,
-      customerDetails: formobj
+      customerDetails: formobj,
+      userId: this.props.userId
     };
-    this.props.onStoringDataToServer(data);
+    this.props.onStoringDataToServer(data, this.props.token);
   };
 
   render() {
@@ -194,13 +197,16 @@ const mapStateToProps = state => {
     Price: state.burgerBuilder.TotalPrice,
     purchasable: state.burgerBuilder.purchasable,
     redirect: state.order.redirect,
-    Loading: state.order.loading
+    Loading: state.order.loading,
+    token: state.auth.token,
+    userId: state.auth.userId
   };
 };
 
 const mapDisptachToProps = dispatch => {
   return {
-    onStoringDataToServer: data => dispatch(storingDataOnServer(data)),
+    onStoringDataToServer: (data, token) =>
+      dispatch(storingDataOnServer(data, token)),
     loading: () => dispatch(startPurchasing())
   };
 };
@@ -208,4 +214,4 @@ const mapDisptachToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDisptachToProps
-)(withRouter(ContactData));
+)(withRouter(withError(ContactData, axios)));

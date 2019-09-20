@@ -1,21 +1,20 @@
-import NavigationItems from '../NavigationItems/NavigationItems'
-import Logo from '../../Logo/Logo'
-import React from 'react';
-import classes from './SideDraw.module.css'
+import NavigationItems from "../NavigationItems/NavigationItems";
+import Logo from "../../Logo/Logo";
+import React from "react";
+import classes from "./SideDraw.module.css";
 
-const sideDraw = (props) => {
-    return (
-        <div className={classes.Sidedraw}>
-            <div className={classes.Logo}>
-                <Logo />
-            </div>
+const sideDraw = props => {
+  return (
+    <div className={classes.Sidedraw}>
+      <div className={classes.Logo}>
+        <Logo />
+      </div>
 
-            <nav>
-                <NavigationItems />
-            </nav>
-        </div>
+      <nav>
+        <NavigationItems isAuthenticated={props.isAuthenticated} />
+      </nav>
+    </div>
+  );
+};
 
-    )
-}
-
-export default sideDraw
+export default sideDraw;

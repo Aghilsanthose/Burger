@@ -5,3 +5,5 @@ export {
 } from "./BurgerBuilder";
 
 export { storingDataOnServer, startPurchasing } from "./order";
+
+export * from "./Auth";

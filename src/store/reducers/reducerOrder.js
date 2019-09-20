@@ -24,7 +24,8 @@ const reducerOrder = (state = initialState, action) => {
     case actionTypes.ERRORONSTORINGDATATOSERVER:
       return {
         ...state,
-        error: true
+        error: true,
+        loading: false
       };
   }
   return state;

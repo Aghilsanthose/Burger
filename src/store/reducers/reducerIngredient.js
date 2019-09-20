@@ -4,7 +4,8 @@ const initialState = {
   Ingridents: null,
   TotalPrice: 4,
   purchasable: false,
-  error: false
+  error: false,
+  building: false
 };
 
 const INGRIDENT_PRICES = {
@@ -26,7 +27,8 @@ const addIngridentsToBurger = (state, action) => {
     ...state,
     Ingridents: temp,
     TotalPrice: state.TotalPrice + INGRIDENT_PRICES[type],
-    purchasable: purchasable
+    purchasable: purchasable,
+    building: true
   };
 };
 
@@ -43,7 +45,8 @@ const removeIngridentFromBurger = (state, action) => {
       ...state,
       Ingridents: temp,
       TotalPrice: state.TotalPrice - INGRIDENT_PRICES[type],
-      purchasable: purchasable
+      purchasable: purchasable,
+      building: true
     };
   }
 };

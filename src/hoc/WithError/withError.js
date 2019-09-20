@@ -39,7 +39,7 @@ const withError = (WrappedComponent, axios) => {
     }
 
     errorHandler = () => {
-      //console.log("In Error Handler", this.state.error);
+      console.log("In Error Handler", this.state.error);
       this.setState({ error: null });
     };
     render() {

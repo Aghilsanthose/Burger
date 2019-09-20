@@ -1,11 +1,11 @@
 import * as actionTypes from "../actions/actionsTypes";
 import axios from "../../axios-orders";
 
-export const storingDataOnServer = data => {
+export const storingDataOnServer = (data, token) => {
   return dispatch => {
     dispatch(startPurchasing());
     axios
-      .post("/sample.json", data)
+      .post("/sample.json?auth=" + token, data)
       .then(response => {
         dispatch({
           type: actionTypes.STORINGDATATOSERVER,

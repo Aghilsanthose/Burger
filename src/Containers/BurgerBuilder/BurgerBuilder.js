@@ -8,11 +8,7 @@ import withError from "../../hoc/WithError/withError";
 import axios from "../../axios-orders";
 import spinner from "../../Components/UI/Spinner/Spinner";
 import { connect } from "react-redux";
-import {
-  addIngridents,
-  removeIngridents,
-  retrivingIngridentsFromServer
-} from "../../store/actions/index";
+import * as actions from "../../store/actions/index";
 
 class BurgerBuilder extends Component {
   state = {
@@ -21,12 +17,22 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount() {
-    //console.log("In DidMount");
+    //console.log("In DidMount", this.props);
     this.props.onRetrivingServer();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.building) {
+      this.props.toRedirect("/checkout");
+    }
+  }
+
   handlingOrderSummary = () => {
-    this.setState({ Purchasing: true });
+    if (this.props.isAuthendicated) {
+      this.setState({ Purchasing: true });
+    } else {
+      this.props.history.push("/signin");
+    }
   };
 
   purchaseCancelHandler = () => {
@@ -86,11 +92,11 @@ class BurgerBuilder extends Component {
             disabled={disabledInfor}
             Purchasable={!this.props.purchasable}
             OrderSummary={this.handlingOrderSummary}
+            isAuthendicated={this.props.isAuthendicated}
           />
         </React.Fragment>
       );
     }
-
     return <React.Fragment>{burger}</React.Fragment>;
   }
 }
@@ -100,17 +106,20 @@ const mapStateToProps = state => {
     Ingridents: state.burgerBuilder.Ingridents,
     Price: state.burgerBuilder.TotalPrice,
     purchasable: state.burgerBuilder.purchasable,
-    error: state.burgerBuilder.error
+    error: state.burgerBuilder.error,
+    isAuthendicated: state.auth.token,
+    building: state.burgerBuilder.building
   };
 };
 
 const mapdispatchToProps = dispatch => {
   return {
     onAdd: data => {
-      dispatch(addIngridents(data));
+      dispatch(actions.addIngridents(data));
     },
-    onSubtract: data => dispatch(removeIngridents(data)),
-    onRetrivingServer: () => dispatch(retrivingIngridentsFromServer())
+    onSubtract: data => dispatch(actions.removeIngridents(data)),
+    onRetrivingServer: () => dispatch(actions.retrivingIngridentsFromServer()),
+    toRedirect: path => dispatch(actions.redirect(path))
   };
 };
 

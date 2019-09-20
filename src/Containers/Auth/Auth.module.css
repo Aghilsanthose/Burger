@@ -1,0 +1,19 @@
+.Auth {
+  width: 80%;
+  padding: 20px 20px;
+  margin: 20px auto;
+  box-shadow: 1px solid #eee;
+  border: 0px 2px 3px #ccc;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.Input {
+  display: block;
+}
+
+@media (min-width: 600px) {
+  .ContactData {
+    width: 500px;
+  }
+}
