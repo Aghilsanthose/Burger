@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Order from "../../Components/Order/order";
 import axios from "../../axios-orders";
 import Spinner from "../../Components/UI/Spinner/Spinner";
-import withError from "../../hoc/WithError/withError";
 import { connect } from "react-redux";
 
 class Myorder extends Component {
@@ -66,6 +65,5 @@ const mapStateToProps = state => {
     userId: state.auth.userId
   };
 };
-const mapDisptachToProps = disptach => {};
 
 export default connect(mapStateToProps)(Myorder);

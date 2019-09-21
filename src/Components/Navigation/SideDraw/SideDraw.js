@@ -5,7 +5,7 @@ import classes from "./SideDraw.module.css";
 
 const sideDraw = props => {
   return (
-    <div className={classes.Sidedraw}>
+    <div className={classes.Sidedraw} onClick={props.Sidebar}>
       <div className={classes.Logo}>
         <Logo />
       </div>

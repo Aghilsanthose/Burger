@@ -1,20 +1,24 @@
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
 import Layout from "../src/hoc/Layout/Layout";
 import Burger from "./Containers/BurgerBuilder/BurgerBuilder";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Checkout from "./Containers/CheckOut/Checkout";
-import Myorders from "./Containers/Myorders/Myorders";
-import Auth from "./Containers/Auth/Auth";
 import Logout from "./Containers/Logout/Logout";
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
+
+const Myorders = React.lazy(() => {
+  return import("./Containers/Myorders/Myorders");
+});
+const Auth = React.lazy(() => {
+  return import("./Containers/Auth/Auth");
+});
 
 class App extends Component {
   state = {};
 
   //WARNING! To be deprecated in React v17. Use componentDidMount instead.
-  componentWillMount() {
-    console.log("In APP");
+  componentDidMount() {
     this.props.isTokenPresentInLocal();
   }
 
@@ -24,9 +28,27 @@ class App extends Component {
         <BrowserRouter>
           <Layout>
             <Switch>
-              <Route path="/signin" component={Auth} />
+              <Route
+                path="/signin"
+                render={() => {
+                  return (
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <Auth />
+                    </Suspense>
+                  );
+                }}
+              />
               <Route path="/checkout" component={Checkout} />
-              <Route path="/orders" component={Myorders} />
+              <Route
+                path="/orders"
+                render={() => {
+                  return (
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <Myorders />
+                    </Suspense>
+                  );
+                }}
+              />
               <Route path="/logout" component={Logout} />
               <Route path="/" exact component={Burger} />
             </Switch>

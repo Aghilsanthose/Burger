@@ -111,7 +111,9 @@ class Auth extends Component {
 
     let spinnerOrForm = (
       <div className={classes.Auth}>
-        {this.props.isAuthenticated ? <Redirect to="/"></Redirect> : null}
+        {this.props.isAuthenticated ? (
+          <Redirect to={this.props.redirectURL}></Redirect>
+        ) : null}
         <form onSubmit={this.formSubmitHandler}>
           {formElementArr}
           <Button btnType="Success">Submit</Button>

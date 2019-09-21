@@ -27,8 +27,9 @@ const reducerOrder = (state = initialState, action) => {
         error: true,
         loading: false
       };
+    default:
+      return state;
   }
-  return state;
 };
 
 export default reducerOrder;

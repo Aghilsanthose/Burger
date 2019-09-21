@@ -6,7 +6,6 @@ import OrderSummary from "../../Components/OrderSummary/OrderSummary";
 import Spinner from "../../Components/UI/Spinner/Spinner";
 import withError from "../../hoc/WithError/withError";
 import axios from "../../axios-orders";
-import spinner from "../../Components/UI/Spinner/Spinner";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 
